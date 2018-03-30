@@ -1,0 +1,76 @@
+<div class="modal-header">
+    <div class="modal-title">
+        <div class="form-group">
+            <div for="faqCategoryModalForm" class="control-label">
+                <h2>
+                    <span class="modalTitle">Add a Category</span>
+                    <button title="Show or Hide the category list" type="button" class="btn btn-sm btn-primary pull-right" ng-click="showDiv = !showDiv">Show / Hide Categories</button>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <form name="faqCategoryFrm" id="faqCategoryFrm">
+            <div class="form-group hidden">
+                <label for="id" class="control-label">Category Id</label>
+                <div>
+                    <input ng-model="$ctrl.faqCategoryModel.id" name="id" type="number" placeholder="Category Id" class="form-control input-xlarge">
+                    <p>
+
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <h4 for="title" class="control-label"><strong>Category Title</strong></h4>
+                <div>
+                    <input required ng-model="$ctrl.faqCategoryModel.title" name="title" type="text" placeholder="Category Title" class="form-control input-xlarge">
+                    <div style="color: red;" class="has-error" ng-show="faqCategoryFrm.title.$invalid && faqCategoryFrm.title.$touched">This field is required</div>
+                    <p>
+
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h4 for="description" class="control-label"><strong>Category Description <i>(optional)</i></strong></h4>
+                <div class="controls">
+                    <textarea style="resize: none" ng-model="$ctrl.faqCategoryModel.description" name="description" placeholder="Category Description" class="form-control input-xlarge"></textarea>
+                    <p>
+
+                    </p>
+                </div>
+                <br />
+
+            </div>
+
+            <div class="form-group">
+                <div class="controls">
+                    <button title="Submit a new category" type="submit" class="btn btn-primary btn-sm" ng-disabled="faqCategoryFrm.$invalid" ng-click="$ctrl.postFaqCategoryFromModal(faqCategoryFrm)">Submit Category</button>
+                    <button title="Close this window" type="button" class="btn btn-primary btn-sm" ng-click="$ctrl.closeFaqCategoryModalWindow()">Close</button>
+                </div>
+            </div>
+
+        </form>
+        <hr />
+
+        <div class="container-fluid row">
+            <div ng-show="showDiv">
+                <div ng-repeat="item in $ctrl.faqCategoryList">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="well col-sm-8 col-sm-offset-2" style="background-color:white">
+                                <div><strong>Category Title: </strong>{{item.title}}</div><br />
+                                <div><strong>Category Description: </strong>{{item.description}}</div>
+                                <br />
+                                <a title="Delete this Category" class="btn btn-link" style="float: right; color:red"><i class="fa fa-trash" ng-click="$ctrl.deleteFaqCategoryFromModal(item.id)"></i></a>
+                                <a title="Edit this Category" class="btn btn-link" style="float: right; color:#1ab394"><i class="fa fa-pencil" ng-click="$ctrl.populateFaqCategoryBackToCategoryForm(item)"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
