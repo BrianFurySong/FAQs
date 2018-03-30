@@ -1,0 +1,98 @@
+<style>
+    /*Errors Start*/
+    /*Error Message Color*/
+    .has-error {
+        color: #fa755a;
+    }
+
+    /*Invalid Field Border Color*/
+    .invalid {
+        border-color: #fa755a;
+    }
+    /*Errors End*/
+</style>
+<div class="ibox-content" id="newFaq">
+    <div class="row">
+        <br />
+        <div class="col-sm-6">
+            <h2 style="text-align: center;">Create FAQ</h2>
+        </div>
+        <div class="col-sm-6">
+            <h2 style="text-align: center; margin-bottom: 20px;">FAQ List</h2>
+        </div>
+        <div class="col-sm-6">
+            <br />
+            <form name="faqFrm">
+                <div class="form-group">
+                    <h4><strong>FAQ Category</strong></h4>
+                    <select required ng-model="$ctrl.faqModel.faqCategoryId"
+                            class="form-control"
+                            name="faqCategory"
+                            ng-options="item.id as item.title for item in $ctrl.faqCategoryItem"
+                            ng-class="{'invalid':faqFrm.faqCategory.$invalid && faqFrm.faqCategory.$touched}">
+                        <option value="" selected="selected" disabled>Please choose a category</option>
+                    </select>
+                    <div class="has-error" ng-show="faqFrm.faqCategory.$invalid && faqFrm.faqCategory.$touched">Category is required</div>
+
+                </div>
+                <div class="form-group">
+                    <h4 for="displayOrder" class="control-label"><strong>Display Order of FAQ When Listing <i>(optional)</i></strong></h4>
+                    <div class="controls">
+                        <input ng-model="$ctrl.faqModel.displayOrder" name="displayOrder" type="number" placeholder="Display Order" class="form-control input-xlarge">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h4 for="question" class="control-label"><strong>Question</strong></h4>
+                    <div>
+                        <input ng-class="{'invalid':faqFrm.question.$invalid && faqFrm.question.$touched}" required ng-model="$ctrl.faqModel.question" name="question" type="text" placeholder="Question" class="form-control input-xlarge">
+                        <div style="color: red;" class="has-error" ng-show="faqFrm.question.$invalid && faqFrm.question.$touched">This field is required</div>
+                        <p>
+
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h4 for="answer" class="control-label"><strong>Answer</strong></h4>
+                    <div class="controls">
+                        <textarea ng-class="{'invalid':faqFrm.answer.$invalid && faqFrm.answer.$touched}" style="resize: none" required ng-model="$ctrl.faqModel.answer" rows="3" name="answer" placeholder="Answer" class="form-control input-xlarge"></textarea>
+                        <div style="color: red;" class="has-error" ng-show="faqFrm.answer.$invalid && faqFrm.answer.$touched">This field is required</div>
+                        <p>
+
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input ng-model="$ctrl.faqModel.isActive" name="isActive" type="checkbox">
+
+                    <label for="isActive" class="control-label">Active</label>
+                </div>
+
+                <div class="form-group">
+                    <div class="controls">
+                        <button title="Submit a new FAQ item" type="submit" class="btn btn-primary btn-sm" ng-disabled="faqFrm.$invalid" ng-click="$ctrl.postFaq(faqFrm)">Submit FAQ</button>
+                        <button title="Open the FAQ category form" type="button" class="btn btn-primary btn-sm" ng-click="$ctrl.launchFaqCategoryModalWindow()">Add a new FAQ Category</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6">
+            <br /><br />
+            <uib-accordion close-others="true">
+                <div style="color: black; padding: 5px;  font-size: 15px;" uib-accordion-group class=" btn-outline btn-primary text-center" heading="{{categoryItem.category}}" ng-repeat="categoryItem in $ctrl.categoryAndFaqItemList | orderBy: 'displayOrder'">
+                    <div class="well text-left" style="background-color:white;" ng-repeat="faqItem in categoryItem.faqsList">
+                        <div><strong style="color: #1ab394;">Question: </strong>{{faqItem.question}}</div><br />
+                        <div><strong style="color: #1ab394;">Answer: </strong>{{faqItem.answer}}</div><br />
+
+                        <strong style="color: #1ab394;">Active: </strong>{{faqItem.isActive?'Yes':'No'}}<br />
+                        <a title="Delete this item" class="btn btn-link" style="cursor: pointer; float: right; color:red;"><i class="fa fa-trash" ng-click="$ctrl.deleteFaq(faqItem.id)"></i></a>
+                        <a title="Edit this item" class="btn btn-link" style="cursor: pointer; float: right; color:#1ab394;"><i class="fa fa-pencil" ng-click="$ctrl.populateFaqFormWithPostedFaq(faqItem)"></i></a>
+                        <br />
+                    </div>
+                </div>
+            </uib-accordion>
+        </div>
+    </div>
+</div>
